@@ -87,7 +87,7 @@ void printFood() {
             typeString(", reply \"No.\"\n\a");
             typeString("  FINALLY END!\n");
             if constexpr (!typeFast) {
-                typeString("  ITS OVER!");
+                typeString("  IT\'S OVER!");
                 std::this_thread::sleep_for(800ms);
                 for (int i {0}; i < 9; ++i) {
                     std::this_thread::sleep_for((200ms));                
