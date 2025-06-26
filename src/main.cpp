@@ -12,7 +12,9 @@ void typeString(std::string_view text, bool typeSlow = false) {
     char c {};
     for (size_t i {0}; i < text.length(); ++i) {
         c = text[i];
-        std::this_thread::sleep_for((typeSlow?200ms:50ms));
+        if constexpr (!typeFast) {
+            std::this_thread::sleep_for((typeSlow?200ms:50ms));
+        }
         std::cout << c;
     }
 }
@@ -84,11 +86,15 @@ void printFood() {
         if (lastResp) {
             typeString(", reply \"No.\"\n\a");
             typeString("  FINALLY END!\n");
-            typeString("  ITS OVER!");
-            std::this_thread::sleep_for(800ms);
-            for (int i {0}; i < 9; ++i) {
-                std::this_thread::sleep_for((200ms));                
-                std::cout << "\b \b";
+            if constexpr (!typeFast) {
+                typeString("  ITS OVER!");
+                std::this_thread::sleep_for(800ms);
+                for (int i {0}; i < 9; ++i) {
+                    std::this_thread::sleep_for((200ms));                
+                    std::cout << "\b \b";
+                }
+            } else {
+                std::cout << "  ";
             }
             typeString("Or is it?\n", true);
             break;
@@ -106,5 +112,7 @@ void printFood() {
 
 int main() {
     printFood();
+
+    std::cin.get();
     return 0;
 }
