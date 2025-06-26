@@ -84,19 +84,16 @@ void printFood() {
         typeCurrentFoodList(curFood, curAdjective);
 
         if (lastResp) {
-            typeString(", reply \"No.\"\n\a");
-            typeString("  FINALLY END!\n");
+            typeString(", reply \"");
             if constexpr (!typeFast) {
-                typeString("  IT\'S OVER!");
+                typeString("Yeah.\"");
                 std::this_thread::sleep_for(800ms);
-                for (int i {0}; i < 9; ++i) {
+                for (int i {0}; i < 6; ++i) {
                     std::this_thread::sleep_for((200ms));                
                     std::cout << "\b \b";
                 }
-            } else {
-                std::cout << "  ";
             }
-            typeString("Or is it?\n", true);
+            typeString("No\"\n", true);
             break;
 
         } else {
