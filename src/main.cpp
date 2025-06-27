@@ -49,6 +49,10 @@ void typeCurrentFoodList(size_t food, size_t adjective, bool capitalFirst = fals
 }
 
 void printFood() {
+    if constexpr (!typeFast) {
+        std::cout << "Press enter to start the story: ";
+        std::cin.get();
+    }
     typeString("\n\a\t\tBREAD, CAN I GO WITH YOU\?\n", TypeSpeed::instant);
     typeString("\tBread goes on and meets bread with butter, who says \"Bread, can I go with you\?\", to which bread replies: \"Yeah, you can.\"\n");
 
