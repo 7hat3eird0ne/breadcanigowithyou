@@ -7,13 +7,18 @@
 
 using namespace std::chrono_literals;
 
+enum class TypeSpeed {
+    normal,
+    slow,
+    instant
+};
 
-void typeString(std::string_view text, bool typeSlow = false) {
-    char c {};
-    for (size_t i {0}; i < text.length(); ++i) {
-        c = text[i];
+void typeString(std::string_view text, TypeSpeed typeSpeed = TypeSpeed::normal) {
+    for (const auto& c: text) {
         if constexpr (!typeFast) {
-            std::this_thread::sleep_for((typeSlow?200ms:50ms));
+            if (typeSpeed != TypeSpeed::instant) {
+                std::this_thread::sleep_for(((typeSpeed == TypeSpeed::normal)?50ms:200ms));
+            }
         }
         std::cout << c;
     }
@@ -41,29 +46,17 @@ void typeCurrentFoodList(size_t food, size_t adjective, bool capitalFirst = fals
 
         ++curAdjective;
     }
-
-    /*
-    adjective incremented at the end of every round
-    then if adjective = adjectives.size(), food incremented
-
-    next loop continues only if food is still below the target food OR the adjective is below (or equal to) target adjective, 
-    meaning that if the loop is supposed to reach new food, then it relies on the adjectives, which at the start of loop are equal to what is meant to print 
-    (meaning that since target adjective is supposed to be print too, <= is required) if the adjective target is 2, then it continues through 2 and then once it becomes 3 it fails
-
-    therefore 3 is reset to 0 at the START of the loop, so that it can be properly removed
-    
-    */
 }
 
 void printFood() {
-    std::cout << "\a        BREAD, CAN I GO WITH YOU\?\n";
-    typeString("  Bread goes on and meets bread with butter, who says \"Bread, can I go with you\?\", to which bread replies \"Yeah, you can.\"\n");
+    typeString("\n\a\t\tBREAD, CAN I GO WITH YOU\?\n", TypeSpeed::instant);
+    typeString("\tBread goes on and meets bread with butter, who says \"Bread, can I go with you\?\", to which bread replies: \"Yeah, you can.\"\n");
 
     for (size_t curFood {0}, curAdjective {1}; true;) {
         bool lastResp {curFood == foods.size() - 1 && curAdjective == adjectives.size() - 1};
         
 
-        typeString("  And so ");
+        typeString("\tAnd so ");
         typeCurrentFoodList(curFood, curAdjective);
         typeString(", go on and meet ");
         
@@ -84,20 +77,20 @@ void printFood() {
         typeCurrentFoodList(curFood, curAdjective);
 
         if (lastResp) {
-            typeString(", reply \"");
+            typeString(", \areply: \"");
             if constexpr (!typeFast) {
-                typeString("Yeah.\"");
-                std::this_thread::sleep_for(800ms);
-                for (int i {0}; i < 6; ++i) {
+                typeString("Yeah, you ca");
+                std::this_thread::sleep_for(1500ms);
+                for (int i {0}; i < 12; ++i) {
                     std::this_thread::sleep_for((200ms));                
                     std::cout << "\b \b";
                 }
             }
-            typeString("No\"\n", true);
+            typeString("No.\"\n", TypeSpeed::slow);
             break;
 
         } else {
-            typeString(", reply \"Yeah, you can.\"\n");
+            typeString(", reply: \"Yeah, you can.\"\n");
             if (++curAdjective == 3) {
                 curAdjective = 0;
                 ++curFood;

@@ -4,4 +4,4 @@ breadfast.exe runs instantly
 
 output.txt features the entire thing
 
-takes aproximately 2:44 hours to sit through
+takes 2:44:29 hours to sit through (assuming an ideal computer, may take 1-20 seconds longer than that)
