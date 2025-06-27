@@ -101,7 +101,12 @@ void printFood() {
 }
 
 int main() {
+    const std::chrono::time_point<std::chrono::steady_clock> start = std::chrono::steady_clock::now();
     printFood();
+    const std::chrono::time_point<std::chrono::steady_clock> end = std::chrono::steady_clock::now();
+
+    std::chrono::seconds duration = std::chrono::duration_cast<std::chrono::seconds>(end - start);
+    std::cout << "\nThe story took " << duration / 1s << "s.\n";
 
     std::cin.get();
     return 0;
