@@ -38,6 +38,6 @@ constexpr std::array<std::string_view, 3> adjectives {
     " with butter and sausage",
 };
 
-constexpr bool typeFast {false}; // set to true for the program to run instantly when compiled
+constexpr bool typeFast {true}; // set to true for the program to run instantly when compiled
 
 #endif
